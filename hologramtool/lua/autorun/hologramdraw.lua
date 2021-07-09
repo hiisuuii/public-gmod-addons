@@ -11,13 +11,13 @@ hook.Add("InitPostEntity","Hologram.InitialTableCache",function()
 		if not IsValid(v) then return end
 		if not v:EntIndex() > -1 then return end --serverside/client only entities can go to hell
 		if allowedClasses[v:GetClass()] or ( v:IsWeapon() or v:IsNPC() or ( v:IsPlayer() and v:Alive() ) or v:IsNextBot() or v:IsVehicle() or v:IsRagdoll() or v:IsScripted() ) then
-			Hologram.EntsCache[v:EntIndex()] = false --By default, nothing is a hologram
+			Hologram.EntsCache[v:EntIndex()] = nil --By default, nothing is a hologram
 		end
 	end
 end)
 
 hook.Add("OnEntityCreated","Hologram.AddNewEntsToTable",function(ent)
-	Hologram.EntsCache[ent:EntIndex()] = false --By default, nothing is a hologram
+	Hologram.EntsCache[ent:EntIndex()] = nil --By default, nothing is a hologram
 end)
 
 hook.Add("EntityRemoved","Hologram.RemovedEntsFromTable",function(ent)
@@ -74,12 +74,14 @@ if CLIENT then
 		--this is probably a really shit way to do this, but it's fine for now
 		for index, bHologram in pairs ( Hologram.EntsCache ) do
 			local ent = ents.GetByIndex(index)
-			--this if statement is stupid but i dont really care, since it works and performance impact isnt too bad i think
-			if ( (!ent:IsWorld() and !ent:IsWeapon()) and ( ent:IsNPC() or (ent:IsPlayer() and ent:Alive()) or ( ent:GetClass() == "prop_physics" || "prop_dynamic") ) and ( (ent:GetNWBool("entIsHologram") == true) or (ent:IsWeapon() and ent:GetOwner():GetNWBool("entIsHologram")) ) ) then
-				if not ent:IsEffectActive(EF_NODRAW) then --we do this as a dumb check to see if something is dead or not
-					render.SuppressEngineLighting(true)
-						ent:DrawModel() --draw model to stencil buffer
-					render.SuppressEngineLighting(false)
+			if IsValid(ent) and bHologram then
+				--this if statement is stupid but i dont really care, since it works and performance impact isnt too bad i think
+				if ( (!ent:IsWorld() and !ent:IsWeapon()) and ( ent:IsNPC() or (ent:IsPlayer() and ent:Alive()) or ( ent:GetClass() == "prop_physics" || "prop_dynamic") ) and bHologram ) then
+					if not ent:IsEffectActive(EF_NODRAW) then --we do this as a dumb check to see if something is dead or not
+						render.SuppressEngineLighting(true)
+							ent:DrawModel() --draw model to stencil buffer
+						render.SuppressEngineLighting(false)
+					end
 				end
 			end
 		end

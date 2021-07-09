@@ -28,7 +28,7 @@ function TOOL:LeftClick(tr)
 			Hologram.EntsCache[tr.Entity:EntIndex()] = true
 		else
 			tr.Entity:SetNWBool("entIsHologram", false)
-			Hologram.EntsCache[tr.Entity:EntIndex()] = false
+			Hologram.EntsCache[tr.Entity:EntIndex()] = nil
 
 		end
 		if SERVER then
@@ -51,7 +51,7 @@ function TOOL:RightClick(tr)
 
 	else
 		owner:SetNWBool("entIsHologram", false)
-		Hologram.EntsCache[owner:EntIndex()] = false
+		Hologram.EntsCache[owner:EntIndex()] = nil
 	end
 
 	if SERVER then
