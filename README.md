@@ -35,11 +35,7 @@
 
   <p align="center">
     Every addon containing lua that I, hiisuuii/Sparks, have ever uploaded, and ever will upload, to the GMod Workshop, will have its source code uploaded here, for the sake of better version control and my sanity.
-    <br />
-    <a href="https://github.com/hiisuuii/public-gmod-addons"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/hiisuuii/public-gmod-addons">View Demo</a>
+  <br />
     ·
     <a href="https://github.com/hiisuuii/public-gmod-addons/issues">Report Bug</a>
     ·
