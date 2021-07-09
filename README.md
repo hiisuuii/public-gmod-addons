@@ -54,7 +54,6 @@
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -62,15 +61,6 @@
   </ol>
 </details>
 
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
-
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`hiisuuii`, `public-gmod-addons`, `twitter_handle`, `email`, `Sparks' Public Addons`, `Every addon containing lua that I, hiisuuii/Sparks, have ever uploaded, and ever will upload, to the GMod Workshop, will have its source code uploaded here, for the sake of better version control and my sanity.`
 
 
 
