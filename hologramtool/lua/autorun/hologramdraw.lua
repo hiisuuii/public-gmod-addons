@@ -9,7 +9,7 @@ local allowedClasses = {
 hook.Add("InitPostEntity","Hologram.InitialTableCache",function()
 	for k,v in pairs(ents.GetAll()) do
 		if not IsValid(v) then return end
-		if not v:EntIndex() > -1 then return end --serverside/client only entities can go to hell
+		if not v:EntIndex() and v:EntIndex() > -1 then return end --serverside/client only entities can go to hell
 		if allowedClasses[v:GetClass()] or ( v:IsWeapon() or v:IsNPC() or ( v:IsPlayer() and v:Alive() ) or v:IsNextBot() or v:IsVehicle() or v:IsRagdoll() or v:IsScripted() ) then
 			Hologram.EntsCache[v:EntIndex()] = nil --By default, nothing is a hologram
 		end
