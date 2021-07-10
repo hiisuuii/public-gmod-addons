@@ -19,6 +19,7 @@ Hologram = Hologram or {}
 Hologram.EntsCache = Hologram.EntsCache or {}
 
 function TOOL:LeftClick(tr)
+	if not IsFirstTimePredicted() then return end
 	--if(CLIENT) then return true end
 	local bIsHologram = tr.Entity:GetNWBool("entIsHologram")
 
@@ -41,6 +42,7 @@ function TOOL:LeftClick(tr)
 end
 
 function TOOL:RightClick(tr)
+	if not IsFirstTimePredicted() then return end
 	--if(CLIENT) then return true end
 	local owner = self:GetOwner()
 	local bIsHologram = owner:GetNWBool("entIsHologram")
