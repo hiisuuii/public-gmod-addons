@@ -17,7 +17,6 @@ hook.Add("InitPostEntity","Hologram.InitialTableCache",function()
 	end
 end)
 
-
 hook.Add("OnEntityCreated","Hologram.AddNewEntsToTable",function(ent)
 	Hologram.EntsCache[ent:EntIndex()] = nil --By default, nothing is a hologram
 end)
@@ -35,6 +34,19 @@ if CLIENT then
 	Hologram = Hologram or {}
 
 	Hologram.EntsCache = Hologram.EntsCache or {}
+
+	
+	net.Receive("Hologram.Tool.UpdateEntity", function(len,ply)
+		local index = net.ReadUInt(16)
+		local bIsHologram = net.ReadBool()
+		if bIsHologram then
+			Hologram.EntsCache[index] = true
+		else
+			Hologram.EntsCache[index] = nil
+		end
+
+	end)
+
 
 	local Clr_holo_Ents = 
 	{
@@ -78,7 +90,7 @@ if CLIENT then
 			local ent = ents.GetByIndex(index)
 			if IsValid(ent) and bHologram then
 				--this if statement is stupid but i dont really care, since it works and performance impact isnt too bad i think
-				if ( (!ent:IsWorld() and !ent:IsWeapon()) and ( ent:IsNPC() or (ent:IsPlayer() and ent:Alive()) or ( ent:GetClass() == "prop_physics" || "prop_dynamic") ) and bHologram ) then
+				if ( (!ent:IsWorld() and !ent:IsWeapon())) then --and ( ent:IsNPC() or (ent:IsPlayer() and ent:Alive()) or ( ent:GetClass() == "prop_physics" || "prop_dynamic") ) and bHologram ) then
 					if not ent:IsEffectActive(EF_NODRAW) then --we do this as a dumb check to see if something is dead or not
 						render.SuppressEngineLighting(true)
 							ent:DrawModel() --draw model to stencil buffer
