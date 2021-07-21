@@ -17,19 +17,29 @@ end
 Hologram = Hologram or {}
 
 Hologram.EntsCache = Hologram.EntsCache or {}
-
+if SERVER then
+	util.AddNetworkString("Hologram.Tool.UpdateEntity")
+end
 function TOOL:LeftClick(tr)
-	if not IsFirstTimePredicted() then return end
-	--if(CLIENT) then return true end
+	--if not IsFirstTimePredicted() then return end
+	if(CLIENT) then return true end
 	local bIsHologram = tr.Entity:GetNWBool("entIsHologram")
 
 	if(tr.Entity:IsValid() && !tr.Entity:IsWorld()) then
 		if ( !bIsHologram ) then
 			tr.Entity:SetNWBool("entIsHologram", true)
 			Hologram.EntsCache[tr.Entity:EntIndex()] = true
+			net.Start("Hologram.Tool.UpdateEntity")
+				net.WriteUInt(tr.Entity:EntIndex(), 16)
+				net.WriteBool(true)
+			net.Broadcast()
 		else
 			tr.Entity:SetNWBool("entIsHologram", false)
 			Hologram.EntsCache[tr.Entity:EntIndex()] = nil
+			net.Start("Hologram.Tool.UpdateEntity")
+				net.WriteUInt(tr.Entity:EntIndex(), 16)
+				net.WriteBool(false)
+			net.Broadcast()
 
 		end
 		if SERVER then
@@ -42,18 +52,26 @@ function TOOL:LeftClick(tr)
 end
 
 function TOOL:RightClick(tr)
-	if not IsFirstTimePredicted() then return end
-	--if(CLIENT) then return true end
+	--if not IsFirstTimePredicted() then return end
+	if(CLIENT) then return true end
 	local owner = self:GetOwner()
 	local bIsHologram = owner:GetNWBool("entIsHologram")
 
 	if ( !bIsHologram ) then
 		owner:SetNWBool("entIsHologram", true)
 		Hologram.EntsCache[owner:EntIndex()] = true
+		net.Start("Hologram.Tool.UpdateEntity")
+			net.WriteUInt(owner:EntIndex(), 16)
+			net.WriteBool(true)
+		net.Broadcast()
 
 	else
 		owner:SetNWBool("entIsHologram", false)
 		Hologram.EntsCache[owner:EntIndex()] = nil
+		net.Start("Hologram.Tool.UpdateEntity")
+			net.WriteUInt(owner:EntIndex(), 16)
+			net.WriteBool(false)
+		net.Broadcast()
 	end
 
 	if SERVER then
