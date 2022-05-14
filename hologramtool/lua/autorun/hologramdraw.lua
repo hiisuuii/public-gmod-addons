@@ -60,12 +60,26 @@ if CLIENT then
 		[ "$pp_colour_mulg" ] 		= 0,
 		[ "$pp_colour_mulb" ] 		= 0
 	}
+
+	local Clr_normal =
+	{
+		[ "$pp_colour_addr" ] 		= 0,
+		[ "$pp_colour_addg" ] 		= 0,
+		[ "$pp_colour_addb" ] 		= 0,
+		[ "$pp_colour_brightness" ] = 0,
+		[ "$pp_colour_contrast" ]	= 1,
+		[ "$pp_colour_colour" ] 	= 1,
+		[ "$pp_colour_mulr" ] 		= 0,
+		[ "$pp_colour_mulg" ] 		= 0,
+		[ "$pp_colour_mulb" ] 		= 0
+	}
 	local holomat = Material("ace/sw/hologram")
 
 	hook.Add("PreDrawEffects", "HologramDraw", function(isDrawingDepth, isDrawingSkybox)
 
 		--if isDrawingDepth then return true end --Fuck if i know whether or not I need this
 		-- Reset everything to known good
+
 		render.SetStencilWriteMask( 0xFF )
 		render.SetStencilTestMask( 0xFF )
 		render.SetStencilReferenceValue( 0 )
@@ -122,6 +136,7 @@ if CLIENT then
 		render.SetStencilEnable( false )
 		--render.DepthRange(0.0,1.0) --not sure what this does
 
+		DrawColorModify(Clr_normal)
 	end)
 
 end
